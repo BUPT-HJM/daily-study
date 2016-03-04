@@ -14,10 +14,39 @@
  - JavaScript行为
 
 #### 分离
-- HTML是结构性的，不要太复杂，没有CSS和JavaScript下保持语义。
-- CSS表现层和JavaScript表现层分别归属于独自的.css和.js文件。
-- 把所有的JavaScript函数定义在一个分离的.js文件中，让所需的HTML页面连接到它。
-- 删除所有的事件处理句柄（注：即行内的那些诸如onmouseover）并归入同一js文件中去。
+ - HTML是结构性的，不要太复杂，没有CSS和JavaScript下保持语义。
+ - CSS表现层和JavaScript表现层分别归属于独自的.css和.js文件。
+ - 把所有的JavaScript函数定义在一个分离的.js文件中，让所需的HTML页面连接到它。
+ - 删除所有的事件处理句柄（注：即行内的那些诸如onmouseover）并归入同一js文件中去。
+
+### cookie与WebStorage
+Cookie的作用是与服务器进行交互，作为HTTP规范的一部分而存在 ，而Web Storage仅仅是为了在本地“存储”数据而生
+cookie虽然在持久保存客户端数据提供了方便，分担了服务器存储的负担，但还是有很多局限性的，有些浏览器会清理cookie
+
+### MVC、MVVM、MVP
+http://www.ruanyifeng.com/blog/2015/02/mvcmvp_mvvm.html
+
+### CSS中 link 和@import 
+- link为html标签，@import为css
+- 页面加载时，link会被同时加载，@import引用的css会等到页面加载完再加载
+- import在IE5上才能识别，link为html标签无兼容性
+- link的权重高于@import
+
+### position的absolute和fixed
+**共同点：**
+- 改变行内元素的呈现方式，display被置为block；
+- 让元素脱离普通流，不占据空间；
+- 默认会覆盖到非定位元素上
+**不同点**
+absolute的”根元素“是可以设置的，而fixed的”根元素“固定为浏览器窗口。当你滚动网页，fixed元素与浏览器窗口之间的距离是不变的。
+
+### CSS的盒子模型
+- IE盒子模型：IE的content部分包含了 border 和 pading
+- 标准W3C盒子模型：内容(content)、填充(padding)、边界(margin)、 边框(border)
+
+ IE 盒子模型的范围也包括 margin、border、padding、content，和标准 W3C 盒子模型不同的是：IE 盒子模型的 content 部分包含了 border 和 pading。
+例：一个盒子的 margin 为 20px，border 为 1px，padding 为 10px，content 的宽为 200px、高为 50px，如果用标准 W3C 盒子模型解释，那么这个盒子需要占据的位置为：宽 20*2+1*2+10*2+200=262px、高 20*2+1*2*10*2+50=112px，盒子的实际大小为：宽 1*2+10*2+200=222px、高 1*2+10*2+50=72px；如果用IE 盒子模型，那么这个盒子需要占据的位置为：宽 20*2+200=240px、高 20*2+50=70px，盒子的实际大小为：宽 200px、高 50px。
+那应该选择哪中盒子模型呢？当然是“标准 W3C 盒子模型”了。怎么样才算是选择了“标准 W3C 盒子模型”呢？很简单，就是在网页的顶部加上 DOCTYPE 声明。如果不加 DOCTYPE 声明，那么各个浏览器会根据自己的行为去理解网页，即 IE 浏览器会采用 IE 盒子模型去解释你的盒子，而 FF 会采用标准 W3C 盒子模型解释你的盒子，所以网页在不同的浏览器中就显示的不一样了。反之，如果加上了 DOCTYPE 声明，那么所有浏览器都会采用标准 W3C 盒子模型去解释你的盒子，网页就能在各个浏览器中显示一致了。
 
 ## 2016-3-3
 
