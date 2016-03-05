@@ -1,5 +1,16 @@
 # study every day
 
+## 2016-3-5
+### CSS布局
+圣杯布局和双飞翼布局http://www.cnblogs.com/imwtr/p/4441741.html
+
+**五种基本布局定位类型:**
+
+- 弹性布局 - 总体宽度及其中所有栏的值都以 em 单位编写。这应使布局能够使用浏览器的指定基本字体大小缩放。 对于视力不好的用户, 这可能更有吸引力、更易于访问, 因为栏宽度将变得更宽, 能以任何大小显示更舒适、更可读的行长度。 由于总体宽度将缩放, 您的设计必须允许可这宽度。
+- 固定布局 - 总体宽度及其中所有栏的值都以像素单位编写。 布局位于用户浏览器的中心。
+- 流体布局 - 总体宽度及其中所有栏的值都以百分比编写。 百分比通过用户浏览器窗口的大小计算。
+- 混合布局 - 混合布局组合两种其他类型的布局 - 弹性和流体。 页面的总宽度为 100%, 但侧栏值设置为 em 单位。
+- 绝对定位布局 - 所有前述布局的外栏使用浮动内容。 而绝对定位布局完全如其名所示 有绝对定位的外栏。 必须记住, 当使用这些布局时, 侧栏会“提出文档流程”, 因而可能有一些不合适的结果 (例如, 页脚可能“看不见”在侧栏在何处结束并在主要内容区域包含的内容少于侧栏的页面与页脚重叠)
 
 ## 2016-3-4
 ### 作用域与闭包理解（二）
@@ -26,7 +37,7 @@ cookie虽然在持久保存客户端数据提供了方便，分担了服务器�
 ### MVC、MVVM、MVP
 http://www.ruanyifeng.com/blog/2015/02/mvcmvp_mvvm.html
 
-### CSS中 link 和@import 
+### CSS中 link 和@import
 - link为html标签，@import为css
 - 页面加载时，link会被同时加载，@import引用的css会等到页面加载完再加载
 - import在IE5上才能识别，link为html标签无兼容性
@@ -70,11 +81,11 @@ absolute的”根元素“是可以设置的，而fixed的”根元素“固定�
 ### CSS3新增伪类与新增特性
 
 - 新增伪类
-- 
+-
 ```
 p:first-of-type 选择属于其父元素的首个 <p> 元素的每个 <p> 元素。
 p:last-of-type  选择属于其父元素的最后 <p> 元素的每个 <p> 元素。
-p:only-of-type  选择属于其父元素唯一的 <p> 元素的每个 <p> 元素。
+p:only-of-type  选择属于其父元素唯一的 p> 元素的每个 <p> 元素。
 p:only-child    选择属于其父元素的唯一子元素的每个 <p> 元素。
 p:nth-child(2)  选择属于其父元素的第二个子元素的每个 <p> 元素。
 :enabled  :disabled 控制表单控件的禁用状态。
@@ -86,7 +97,7 @@ p:nth-child(2)  选择属于其父元素的第二个子元素的每个 <p> 元�
 CSS3实现圆角（border-radius），阴影（box-shadow），
 对文字加特效（text-shadow），线性渐变（gradient），旋转（transform）
 transform:rotate(9deg) scale(0.85,0.90) translate(0px,-30px) skew(-9deg,0deg);//旋转,缩放,定位,倾斜
-增加了更多的CSS选择器  多背景 rgba 
+增加了更多的CSS选择器  多背景 rgba
 在CSS3中唯一引入的伪元素是::selection.
 媒体查询，多栏布局
 border-image
@@ -112,7 +123,7 @@ div{
 }
 /*权重为10+10+1=21*/
 .class1 .class2 div{
-} 
+}
 ```
 如果权重相同，则最后定义的样式会起作用，但是应该避免这种情况出现
 
@@ -120,16 +131,16 @@ div{
 inline-block既保留inline的同行属性，又拥有block的宽高属性
 
 ### position
-- 当设定position:absolute 
-如果父级（无限）没有设定position属性，那么当前的absolute则结合TRBL属性以浏览器左上角为原始点进行定位 
-如果父级（无限）设定position属性，那么当前的absolute则结合TRBL属性以父级（最近）的左上角为原始点进行定位。 
-- 当设定position: relative 
-则参照父级（最近）的内容区的左上角为原始点结合TRBL属性进行定位（或者说相对于被定位元素在父级内容区中的上一个元素进行偏移），无父级则以BODY的左上角为原始点。相对定位是不能层叠的。在使用相对定位时，无论元素是否进行移动，元素依然占据原来的空间。因此，移动元素会导致它覆盖其他框。 
+- 当设定position:absolute
+如果父级（无限）没有设定position属性，那么当前的absolute则结合TRBL属性以浏览器左上角为原始点进行定位
+如果父级（无限）设定position属性，那么当前的absolute则结合TRBL属性以父级（最近）的左上角为原始点进行定位。
+- 当设定position: relative
+则参照父级（最近）的内容区的左上角为原始点结合TRBL属性进行定位（或者说相对于被定位元素在父级内容区中的上一个元素进行偏移），无父级则以BODY的左上角为原始点。相对定位是不能层叠的。在使用相对定位时，无论元素是否进行移动，元素依然占据原来的空间。因此，移动元素会导致它覆盖其他框。
 - static为默认值
 - inherit规定从父元素继承position的值
 - fixed生成绝对定位的元素，相对浏览器窗口进行定位
 
->一般来讲，网页居中的话用Absolute就容易出错，因为网页一直是随着分辨率的大小自动适应的，而Absolute则会以浏览器的左上角为原始点，不会应为分辨率的变化而变化位置。有时还需要依靠z-index来设定容器的上下关系，数值越大越在最上面，数值范围是自然数。当然有一点要注意，**父子关系是无法用z-index来设定上下关系的，一定是子级在上父级在下**。 
+>一般来讲，网页居中的话用Absolute就容易出错，因为网页一直是随着分辨率的大小自动适应的，而Absolute则会以浏览器的左上角为原始点，不会应为分辨率的变化而变化位置。有时还需要依靠z-index来设定容器的上下关系，数值越大越在最上面，数值范围是自然数。当然有一点要注意，**父子关系是无法用z-index来设定上下关系的，一定是子级在上父级在下**。
 设置此属性值为 relative 会保持对象在正常的HTML流中，但是它的位置可以根据它的前一个对象进行偏移。在相对(relative)定位对象之后的文本或对象占有他们自己的空间而不会覆盖被定位对象的自然空间。与此不同的，在绝对(absolute)定位对象之后的文本或对象在被定位对象被拖离正常文档流之前会占有它的自然空间。放置绝对(absolute)定位对象在可视区域之外会导致滚动条出现。而放置相对(relative)定位对象在可视区域之外，滚动条不会出现。其实对于定位的主要问题是要记住每个定位的意义。相对定位是“相对于“元素在文档流中初始位置的，而绝对定位是”相对于“最近的已经定位的祖先元素
 
 ###　初始化CSS样式（CSS reset）
@@ -148,14 +159,14 @@ inline-block既保留inline的同行属性，又拥有block的宽高属性
     a:hover { text-decoration:underline; }
     sup { vertical-align:text-top; }
     sub{ vertical-align:text-bottom; }
-    legend { color:#000; }  
+    legend { color:#000; }
     fieldset, img { border:0; }
     button, input, select, textarea { font-size:100%; }
-    table { border-collapse:collapse; border-spacing:0; } 
+    table { border-collapse:collapse; border-spacing:0; }
 
 ### BFC（Block formatting context）
 http://www.w3cplus.com/css/understanding-bfc-and-margin-collapse.html
-> BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。   
+> BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。
 （W3C CSS 2.1 规范中的一个概念,它决定了元素如何对其内容进行定位,以及与其他元素的关 系和相互作用。）
 
 - w3c规范中的BFC定义：
@@ -171,7 +182,7 @@ http://www.xiaomeiti.com/note/3608
 
 ### CSS sprites
 CSS Sprites其实就是把网页中一些背景图片整合到一张图片文件中，再利用CSS的“background-image”，“background- repeat”，“background-position”的组合进行背景定位，background-position可以用数字能精确的定位出背景图片的位置。
----  
+---
 ## 2016-3-3
 
 ### 作用域与闭包理解（一）
@@ -274,7 +285,7 @@ var test = function() {
 
     for(var i = 0; i < 5; i++) {
         ret[i] = function() {
-            return i;  
+            return i;
         }
     }
 
