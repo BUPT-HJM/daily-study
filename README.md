@@ -1,5 +1,39 @@
 # study every day
 
+## 2016-3-7
+### 常见兼容性问题
+- png24的图片在ie6浏览器上出现背景，解决方案是做成png8
+- 浏览器默认的margin和padding不同。解决方案是加一个全局的`*{margin: 0;padding: ;}`来统一
+- IE6双边距bug：块属性标签float后，又有横向的margin情况下，在ie6显示margin比设置的大
+- 浮动ie产生的双倍距离（IE双边距问题：在IE6下，如果对元素设置了浮动，同时又设置了margin-left或margin-right，margin值会加倍）
+`#box{float: left;width: 10px;margin: 0 0 0 100px;}`这种情况之下会产生20px的距离，解决方案是在float的标签样式控制中加入
+`_display: inline`将其转为行内属性（_这个符号只有ie6会识别）
+- 渐进识别的方式，从总体中逐渐排除局部
+  首先，巧妙的使用"\9"这一标记，将IE浏览器从所有情况中分离出来。接着，再使用“+”将IE8和IE7、IE6分离开来，这样IE8已经独立识别
+  ```
+   css
+      .bb{
+       background-color:#f1ee18;/*所有识别*/
+      .background-color:#00deff\9; /*IE6、7、8识别*/
+      +background-color:#a200ff;/*IE6、7识别*/
+      _background-color:#1e0bd1;/*IE6识别*/ 
+      } 
+  ```
+
+- IE下，可以用获取常规属性的方法来获取自定义属性， 也可以使用getAttribute()获取自定义属性;
+   Firefox下,只能使用getAttribute()获取自定义属性. 
+   解决方法:统一通过getAttribute()获取自定义属性.
+-  Chrome 中文界面下默认会将小于 12px 的文本强制按照 12px 显示, 
+  可通过加入 CSS 属性 `-webkit-text-size-adjust: none;`解决.
+- 超链接访问过后hover样式就不出现了 被点击访问过的超链接样式不在具有hover和active了解决方法是改变CSS属性的排列顺序:
+`L-V-H-A :  a:link {} a:visited {} a:hover {} a:active {}`
+- 怪异模式问题：漏写DTD声明，Firefox仍然会按照标准模式来解析网页，但在IE中会触发怪异模式。为避免怪异模式给我们带来不必要的麻烦，最好养成书写DTD声明的好习惯。
+-  上下margin重合问题
+ie和ff都存在，相邻的两个div的margin-left和margin-right不会重合，但是margin-top和margin-bottom却会发生重合。
+解决方法，养成良好的代码编写习惯，同时采用margin-top或者同时采用margin-bottom。 
+- IE6对png图片格式支持不好（引用一段脚本处理）
+
+
 ## 2016-3-6
 ### js同步与异步
 >Javascript语言的执行环境是"单线程"（single thread）。
@@ -13,6 +47,8 @@
 由此可以看出，**同步和异步的特点是：**
 >至少在两个对象之间需要协作（男朋友和女朋友，老公和老婆）；
 两个对象都需要处理一系列的事情（工作和吃饭）。 另一个类似的关于CPU计算和磁盘操作编的例子： 同步：CPU需要计算10个数据，每计算一个结果后，将其写入磁盘，等待写入成功后，再计算下一个数据，直到完成。 异步：CPU需要计算10个数据，每计算一个结果后，将其写入磁盘，不等待写入成功与否的结果，立刻返回继续计算下一个数据，计算过程中可以收到之前写入是否成功的通知，直到完成。
+
+
 ## 2016-3-5
 ### CSS布局
 圣杯布局和双飞翼布局http://www.cnblogs.com/imwtr/p/4441741.html
