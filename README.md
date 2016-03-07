@@ -1,4 +1,5 @@
 # study every day
+[TOC]
 
 ## 2016-3-7
 ### 常见兼容性问题
@@ -32,8 +33,41 @@
 ie和ff都存在，相邻的两个div的margin-left和margin-right不会重合，但是margin-top和margin-bottom却会发生重合。
 解决方法，养成良好的代码编写习惯，同时采用margin-top或者同时采用margin-bottom。 
 - IE6对png图片格式支持不好（引用一段脚本处理）
+### 浮动和清除浮动
+#### 浮动元素引起的问题
+- 父元素的高度无法被撑开，影响父元素同级的元素
+- 与浮动元素同级的非浮动元素会跟随其后
+- 若非第一个元素浮动，则该元素之前的元素也需要浮动，否则会影响页面显示的结构
+**解决方法：**
+使用CSS中的clear:both;属性来清除元素的浮动可解决2、3问题，对于问题1，添加如下样式，给父元素添加clearfix样式
+```
+.clearfix:after{content: ".";display: block;height: 0;clear: both;visibility: hidden;}
+.clearfix{display: inline-block;} /* for IE/Mac */
+```
+#### 清除浮动的几种方法
+- 额外标签法，<div style="clear:both;"></div>（缺点：不过这个办法会增加额外的标签使HTML结构看起来不够简洁。）
+- 使用after伪类
+``` 
+#parent:after{
+    content:".";
+    height:0;
+    visibility:hidden;
+    display:block;
+    clear:both;
+    }
+```
+- 浮动外部元素
+- 设置`overflow`为`hidden`或者`auto`
 
+>浮动元素脱离文档流，不占据空间。浮动元素碰到包含它的边框或者浮动元素的边框停留。
+1.使用空标签清除浮动。
+   这种方法是在所有浮动标签后面添加一个空标签 定义css clear:both. 弊端就是增加了无意义标签。
+2.使用overflow。
+   给包含浮动元素的父标签添加css属性 overflow:auto; zoom:1; zoom:1用于兼容IE6。
+3.使用after伪对象清除浮动。
+   该方法只适用于非IE浏览器。具体写法可参照以下示例。使用中需注意以下几点。一、该方法中必须为需要清除浮动元素的伪对象中设置 height:0，否则该元素会比实际高出若干像素；
 
+   
 ## 2016-3-6
 ### js同步与异步
 >Javascript语言的执行环境是"单线程"（single thread）。
