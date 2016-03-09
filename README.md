@@ -1,6 +1,15 @@
 # study every day
 
 [TOC]
+
+## 2016-3-9
+### iframe
+- **优点：**  解决加载缓慢的第三方内容如图标和广告等的加载问题，Security sandbox，并行加载脚本
+- **缺点：** iframe会阻塞主页面的Onload事件，即时内容为空，加载也需要时间
+，没有语意 
+
+### 如何实现浏览器内多个标签页之间的通信?
+调用localstorge、cookies等本地存储方式
 ## 2016-3-8
 ### IE8下盒模型
 宽高不包括内边距与边框
@@ -21,9 +30,11 @@
 - IE8/IE7/IE6支持通过document.createElement方法产生的标签，
   可以利用这一特性让这些浏览器支持HTML5新标签，
   浏览器支持新标签后，还需要添加标签默认的样式 当然最好的方式是直接使用成熟的框架、使用最多的是html5shim框架
+  ```
    <!--[if lt IE 9]> 
    <script> src="http://html5shim.googlecode.com/svn/trunk/html5.js"</script> 
    <![endif]--> 
+  ```
 
 
 ## 2016-3-7
