@@ -2,6 +2,85 @@
 
 [TOC]
 
+## 2016-3-11
+### FOUC
+FOUC - Flash Of Unstyled Content 文档样式闪烁
+`<style type="text/css" media="all">@import "../fouc.css";</style>`
+而引用CSS文件的@import就是造成这个问题的罪魁祸首。IE会先加载整个HTML文档的DOM，然后再去导入外部的CSS文件，因此，在页面DOM加载完成到CSS导入完成中间会有一段时间页面上的内容是没有样式的，这段时间的长短跟网速，电脑速度都有关系。
+解决方法简单的出奇，只要在`<head>`之间加入一个`<link>`或者`<script>`元素就可以了。
+
+###  null和undefined的区别
+undefined表示"缺少值"，就是此处应该有一个值，但是还没有定义。典型用法是：
+```
+（1）变量被声明了，但没有赋值时，就等于undefined。
+（2) 调用函数时，应该提供的参数没有提供，该参数等于undefined。
+（3）对象没有赋值的属性，该属性的值为undefined。
+（4）函数没有返回值时，默认返回undefined。
+```
+null表示"没有对象"，即该处不应该有值。典型用法是：
+```
+（1） 作为函数的参数，表示该函数的参数不是对象。
+（2） 作为对象原型链的终点。
+```
+
+### new操作符具体干了什么
+- 创建一个空对象，并且this变量引用该对象，同时还继承了该对象的原型
+- 属性和方法被加入到this引用的对象中
+- 新创建的对象由this所引用，并且最后隐式的返回this
+
+```
+var obj  = {};
+obj.__proto__ = Base.prototype;
+Base.call(obj); 
+```
+
+### json
+JSON(JavaScript Object Notation) 是一种轻量级的数据交换格式。
+它是基于JavaScript的一个子集。数据格式简单, 易于读写, 占用带宽小
+{'age':'12', 'name':'back'}
+
+### js延迟加载
+- defer和async
+- 动态创建DOM方式（创建script，插入到DOM中，加载完毕后callBack）
+- 按需异步载入js
+
+### 解决跨域问题
+
+>jsonp、 document.domain+iframe、window.name、window.postMessage、服务器上设置代理页面
+jsonp的原理是动态插入script标签
+
+>参考链接:https://segmentfault.com/a/1190000000718840
+#### 跨域定义
+只要协议、域名、端口有任何一个不同，都被当作是不同的域。
+
+##### 跨域资源共享（CORS）
+CORS（Cross-Origin Resource Sharing）跨域资源共享，定义了必须在访问跨域资源时，浏览器与服务器应该如何沟通。CORS背后的基本思想就是使用自定义的HTTP头部让浏览器与服务器进行沟通，从而决定请求或响应是应该成功还是失败。
+
+##### 通过jsonp跨域
+JSONP由两部分组成：回调函数和数据。回调函数是当响应到来时应该在页面中调用的函数，而数据就是传入回调函数中的JSON数据。
+
+- **优点：**
+它不像XMLHttpRequest对象实现的Ajax请求那样受到同源策略的限制；它的兼容性更好，在更加古老的浏览器中都可以运行，不需要XMLHttpRequest或ActiveX的支持；并且在请求完毕后可以通过调用callback的方式回传结果。
+
+- **缺点：**
+它只支持GET请求而不支持POST等其它类型的HTTP请求；它只支持跨域HTTP请求这种情况，不能解决不同域的两个页面之间如何进行JavaScript调用的问题。
+
+##### CORS和JSONP对比
+CORS与JSONP相比，无疑更为先进、方便和可靠。
+```
+ 1、 JSONP只能实现GET请求，而CORS支持所有类型的HTTP请求。
+ 2、 使用CORS，开发者可以使用普通的XMLHttpRequest发起请求和获得数据，比起JSONP有更好的错误处理。
+ 3、 JSONP主要被老的浏览器支持，它们往往不支持CORS，而绝大多数现代浏览器都已经支持了CORS）。
+```
+
+#### 通过修改document.domain来跨子域
+浏览器都有一个同源策略，其限制之一就是第一种方法中我们说的不能通过ajax的方法去请求不同源中的文档。 它的第二个限制是浏览器中不同域的框架之间是不能进行js的交互操作的。
+
+#### 使用window.name来进行跨域
+#### 使用HTML5的window.postMessage方法跨域
+window.postMessage(message,targetOrigin) 方法是html5新引进的特性，可以使用它来向其它的window对象发送消息，无论这个window对象是属于同源或不同源，目前IE8+、FireFox、Chrome、Opera等浏览器都已经支持window.postMessage方法。
+
+
 ## 2016-3-10
 ### 线程与进程的区别
 **一个程序至少有一个进程,一个进程至少有一个线程.**
