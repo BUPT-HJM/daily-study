@@ -1,6 +1,11 @@
 # study every day
 
 [TOC]
+## 2016-5-7
+要使chrome浏览器支持移动端touch事件，启动参数加--touch
+
+
+---
 
 ## 2016-4-6
 闭包说得挺好的网址
