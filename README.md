@@ -1,7 +1,5 @@
 # study every day
 
-[TOC]
-
 
 ## 1.Two-sum
 > Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -19,7 +17,7 @@ Because nums[0] + nums[1] = 2 + 7 = 9,
 return [0, 1].
 ```
 
-**个人解答：**
+**个人解答(2016/10/19)：**
 
 题意为给出一个数组，给一个特定的值，然后函数是可以返回两个数字的索引（它们之和为给出的特定的值）。
 
@@ -49,6 +47,67 @@ var twoSum = function (nums, target) {
     return [0];
 };
 ```
+
+
+## 326. Power of Three
+> Given an integer, write a function to determine if it is a power of three.
+
+**Difficulty:** Easy
+
+**link:** https://leetcode.com/problems/power-of-three/
+
+**Example:** 无
+
+
+**个人解答(2016/10/19)：**
+
+题意为给出一个整数，写一个函数判断它是否为3的幂。
+
+通过数学知识，判断一个数是不是某个数的幂，我们可以通过对数函数来判断，直接用换底公式来判断是否得出的为整数即可
+
+但是JavaScript 只有一种数字类型 Number ，而且在Javascript中所有的数字都是以IEEE-754标准格式表示的。浮点数存在精度问题
+```
+Chrome测试结果
+来源： http://madscript.com/javascript/javscript-float-number-compute-problem/
+输入               输出
+1.0-0.9 == 0.1     False
+1.0-0.8 == 0.2     False
+1.0-0.7 == 0.3     False
+1.0-0.6 == 0.4     True
+1.0-0.5 == 0.5     True
+1.0-0.4 == 0.6     True
+1.0-0.3 == 0.7     True
+1.0-0.2 == 0.8     True
+1.0-0.1 == 0.9     True
+```
+所以要解决这个问题，就必须控制精度问题，可以通过`toFixed()`来控制小数的位数,用`toFixed(10)`可以解决这个问题
+
+
+**Run Time:** 459ms
+
+**Language:** javascript
+
+**code:**
+
+``` javascript
+/**
+ * @param {number} n
+ * @return {boolean}
+ */
+var isPowerOfThree = function (n) {
+    var res = (Math.log(n) / Math.log(3)).toFixed(10);  
+    if (n <= 0) {
+        return false;
+    }
+    if (res === Math.floor(res).toFixed(10)) {
+        return true;
+    }
+    return false;
+};
+```
+
+
+
 
 
 
