@@ -1,6 +1,70 @@
 # study every day
 
 [TOC]
+
+
+## 1.Two-sum
+> Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+You may assume that each input would have exactly one solution.
+
+**Difficulty:** Easy
+
+**link:** https://leetcode.com/problems/two-sum/
+
+**Example:**
+```
+Given nums = [2, 7, 11, 15], target = 9,
+
+Because nums[0] + nums[1] = 2 + 7 = 9,
+return [0, 1].
+```
+
+**个人解答：**
+
+题意为给出一个数组，给一个特定的值，然后函数是可以返回两个数字的索引（它们之和为给出的特定的值）。
+
+直接采用两层遍历就可以解决问题，保存好length的值可以节省100ms的运行时间。
+
+**Run Time:** 179ms
+
+**Language:** javascript
+
+**code:**
+
+``` javascript
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+var twoSum = function (nums, target) {
+    var len = nums.length;
+    for (var i = 0; i < len; i++) {
+        for (var j = i + 1; j < len; j++) {
+            if (nums[i] + nums[j] == target) {
+                return [i, j];
+            }
+        }
+    }
+    return [0];
+};
+```
+
+
+
+
+
+
+---
+
+## 2016-10-19
+
+觉得每天都要学点东西才能进步，重启这个repo啦~这个repo就变成解题报告好了
+
+近期计划：习惯vim开发，每天一题leetcode希望能坚持啦~
+
+---
+
 ## 2016-5-7
 要使chrome浏览器支持移动端touch事件，启动参数加--touch
 
