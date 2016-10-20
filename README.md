@@ -106,7 +106,69 @@ var isPowerOfThree = function (n) {
 };
 ```
 
+## 3. Longest Substring Without Repeating Characters
+> Given a string, find the length of the longest substring without repeating characters.
 
+**Difficulty:** Medium
+
+**link:** https://leetcode.com/problems/longest-substring-without-repeating-characters/
+
+**Example:** 
+
+>Given "abcabcbb", the answer is "abc", which the length is 3.
+
+>Given "bbbbb", the answer is "b", with the length of 1.
+
+>Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+
+
+
+**个人解答(2016/10/20)：**
+
+题意为给出一个字符串寻找这个字符串中最长的无重复字母的子串
+
+使用两个“指针”来遍历这个字符串并且使用hash对象来标记即可，在解这个题的时候我遇到超时问题，后来优化了算法，这里我会写一篇文章纪录
+
+``` javascript
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring = function (s) {
+    var max = 0;
+    var len = s.length;
+    var index = 0;
+    var start = 0;
+    var hash = {};
+    if (len === 0) {
+        return 0;
+    }
+    while (index < len) {//遍历字符串
+        //index为当前字符串开始的那个索引
+        //start为当前index之前没有重复的开始的索引
+        var sItem = s[index];
+        if (!hash[sItem]) {
+            //不存在
+            hash[sItem] = true;
+        } else {
+            //存在
+            while (1) {
+                if (s[start] == sItem) {
+                    //找到相同的那个值的位置
+                    start++;
+                    break;
+                }
+                hash[s[start]] = false;//将之前都设成false
+                start++;
+            }
+
+        }
+        max = Math.max(max, index - start + 1);
+        index++;
+    }
+    return max;
+};
+```
 
 
 
