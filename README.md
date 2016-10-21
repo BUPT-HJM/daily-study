@@ -170,6 +170,63 @@ var lengthOfLongestSubstring = function (s) {
 };
 ```
 
+## 4. Median of Two Sorted Arrays
+
+> There are two sorted arrays nums1 and nums2 of size m and n respectively.
+
+> Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
+
+**Difficulty:** Medium
+
+**link:** https://leetcode.com/problems/longest-substring-without-repeating-characters/
+
+**Example:** 
+
+```
+nums1 = [1, 3]
+nums2 = [2]
+
+The median is 2.0
+```
+
+```
+nums1 = [1, 2]
+nums2 = [3, 4]
+
+The median is (2 + 3)/2 = 2.5
+```
+
+
+
+**个人解答(2016/10/21)：**
+
+题意为给出一个字符串寻找这个字符串中最长的无重复字母的子串
+
+使用两个“指针”来遍历这个字符串并且使用hash对象来标记即可，在解这个题的时候我遇到超时问题，后来优化了算法，这里我会写一篇文章纪录
+
+``` javascript
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number}
+ */
+var findMedianSortedArrays = function (nums1, nums2) {
+    nums1.forEach(function (item) {
+        nums2.push(item);
+    })
+    nums2.sort(function (a, b) {
+        return a - b;
+    })
+    var half = nums2.length / 2;
+    if (nums2.length % 2 === 0) {
+        return (nums2[half - 1] + nums2[half]) / 2;
+
+    } else {
+        return nums2[Math.round(half) - 1];
+    }
+};
+```
+
 
 
 
