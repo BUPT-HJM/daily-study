@@ -248,7 +248,64 @@ var findMedianSortedArrays = function (nums1, nums2) {
 ```
 
 
+## 5. Longest Palindromic Substring
 
+> Given a string S, find the longest palindromic substring in S. You may assume that the maximum length of S is 1000, and there exists one unique longest palindromic substring.
+
+**Difficulty:** Medium
+
+**link:** https://leetcode.com/problems/longest-palindromic-substring/
+
+**Example:** 无
+
+**个人解答(2016/10/22)：**
+
+这个解答采用的是dp动态规划，答案没问题，但是又超时了，用java的同样算法居然能过，用js不行，今天无力再写了~之后再来改这题，网上的算法需要理解~
+
+``` javascript
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var longestPalindrome = function (s) {
+    var arr = [],
+        max = 0,
+        len = s.length,
+        left = 0,
+        right = 0;
+
+    for (var i = 0; i < len; i++) {
+        arr[i] = [];
+        for (var j = 0; j < len; j++) {
+            if ( i >= j ) {
+                arr[i][j] = 1;
+            } else {
+                arr[i][j] = 0;
+            }
+        }
+    }
+
+    for (var k = 1; k < len; k++) {
+        for (var i = 0; i + k < len; i++) {
+            j = i + k;
+            if (s[i] !== s[j]) {
+                arr[i][j] = 0;
+            } else {
+                arr[i][j] = arr[i + 1][j - 1];
+                if (arr[i][j]) {
+                    if (k + 1 > max) {
+                        max = k + 1;
+                        left = i;
+                        right = j;
+                    }
+                }
+            }
+        }
+    }
+    return s.substring(left, right + 1);
+};
+
+```
 
 
 
