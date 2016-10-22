@@ -127,7 +127,7 @@ var isPowerOfThree = function (n) {
 
 题意为给出一个字符串寻找这个字符串中最长的无重复字母的子串
 
-使用两个“指针”来遍历这个字符串并且使用hash对象来标记即可，在解这个题的时候我遇到超时问题，后来优化了算法，这里我会写一篇文章纪录
+使用两个“指针”来遍历这个字符串并且使用hash对象来标记即可，在解这个题的时候我遇到超时问题，因为算法复杂度为n的三次方，然后将算法改成移动的窗口，通过一个有边界的窗口的移动将复杂度变成n
 
 ``` javascript
 /**
@@ -170,6 +170,27 @@ var lengthOfLongestSubstring = function (s) {
 };
 ```
 
+``` javascript
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring = function (s) {
+    var max = 0;
+    var len = s.length;
+    var hash = {}
+    for(var left = 0, right = 0; right < len; right++) {
+        if(hash[s[right]]) {
+            left = Math.max(hash[s[right]],left);
+        }
+        max = Math.max(max, right-left+1);
+        hash[s[right]] = right + 1;
+    }
+    
+    return max;
+};
+```
+
 ## 4. Median of Two Sorted Arrays
 
 > There are two sorted arrays nums1 and nums2 of size m and n respectively.
@@ -178,7 +199,7 @@ var lengthOfLongestSubstring = function (s) {
 
 **Difficulty:** Medium
 
-**link:** https://leetcode.com/problems/longest-substring-without-repeating-characters/
+**link:** https://leetcode.com/problems/median-of-two-sorted-arrays/
 
 **Example:** 
 
@@ -197,12 +218,11 @@ The median is (2 + 3)/2 = 2.5
 ```
 
 
-
 **个人解答(2016/10/21)：**
 
-题意为给出一个字符串寻找这个字符串中最长的无重复字母的子串
+题意为找出两个排序好的数组的中间值
 
-使用两个“指针”来遍历这个字符串并且使用hash对象来标记即可，在解这个题的时候我遇到超时问题，后来优化了算法，这里我会写一篇文章纪录
+直接投机取巧直接把另外一个数组放进去，然后用js的sort(快排)然后根据索引就可以找出中间的值了。
 
 ``` javascript
 /**
