@@ -307,7 +307,76 @@ var longestPalindrome = function (s) {
 
 ```
 
+## 6. ZigZag Conversion
 
+> The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+
+**Difficulty:** Easy
+
+**link:** https://leetcode.com/problems/zigzag-conversion/
+
+**Example:** 
+
+```
+P   A   H   N
+A P L S I I G
+Y   I   R
+```
+And then read line by line: "PAHNAPLSIIGYIR"
+
+**个人解答(2016/10/22)：**
+
+这个题没多想就是数学问题，我就直接用数组了，omg，其实直接输出就行了，这样反而倒麻烦了，导致了`Memory Limit Exceeded`,之后改，每天碰一题真难啊~
+
+``` javascript
+/**
+ * @param {string} s
+ * @param {number} numRows
+ * @return {string}
+ */
+var convert = function(s, numRows) {
+    if (numRows == 1) {
+        return s;
+    }
+    var len = s.length
+      , loop = Math.floor(len / (2 * numRows - 2))
+      , loopReminder = len % (2 * numRows - 2)
+      , columnsReminder = loopReminder <= numRows ? 1 : (1 + loopReminder - numRows)
+      , columns = loop * (numRows - 1) + columnsReminder
+      , arr = []
+      , index = 0
+      , pos = {
+        x: 0,
+        y: 0
+    }
+      , convertStr = '';
+    for (var i = 0; i < columns; i++) {
+        arr[i] = [];
+        for (var j = 0; j < numRows; j++) {
+            arr[i][j] = 0;
+        }
+    }
+    while (index < len) {
+        arr[pos.x][pos.y] = s[index];
+        if ((index + 1) % (2 * numRows - 2) >= numRows || (index + 1) % (2 * numRows - 2) == 0) {
+            pos.x += 1;
+            pos.y -= 1;
+        } else {
+            pos.y++;
+        }
+        index++;
+    }
+    for (var j = 0; j < numRows; j++) {
+        for (var i = 0; i < columns; i++) {
+            if (arr[i][j] !== 0) {
+                convertStr += arr[i][j];
+            }
+        }
+    }
+    return convertStr;
+};
+
+```
 
 
 ---
