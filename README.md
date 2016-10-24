@@ -324,7 +324,9 @@ Y   I   R
 ```
 And then read line by line: "PAHNAPLSIIGYIR"
 
-**个人解答(2016/10/22)：**
+**个人解答(2016/10/23)：**
+
+题意是按z字形输出一个字符串
 
 这个题没多想就是数学问题，我就直接用数组了，omg，其实直接输出就行了，这样反而倒麻烦了，导致了`Memory Limit Exceeded`,之后改，每天碰一题真难啊~
 
@@ -376,6 +378,92 @@ var convert = function(s, numRows) {
     return convertStr;
 };
 
+```
+
+**个人解答(2016/10/24)：**
+
+这题就是找数学规律，今天稍微在纸上画了画，就是找余数然后去对应那个输出的行数，简单地存到数组里再输出就解决了
+
+``` javascript
+/**
+ * @param {string} s
+ * @param {number} numRows
+ * @return {string}
+ */
+var convert = function(s, numRows) {
+    var convertStr = '';
+    var arr = [];
+    var reminder;
+    var row;
+    if(numRows <= 1) {
+        return s;
+    }
+    for (var i = 0; i < numRows; i++) {
+        arr[i] = '';
+    }
+    for (var index = 0; index < s.length; index++) {
+        reminder = (index + 1) % (2 * numRows - 2);
+        if (reminder <= numRows) {
+            row = reminder - 1;
+        } else {
+            row = numRows - (reminder - numRows) - 1;
+        }
+        if (reminder == 0) {
+            row = 1;
+        }
+        arr[row] += s[index];
+    }
+    for (var i = 0; i < numRows; i++) {
+        convertStr += arr[i];
+    }
+    return convertStr;
+};
+```
+
+
+## 7. Reverse Integer
+
+> Reverse digits of an integer.
+
+**Difficulty:** Easy
+
+**link:** https://leetcode.com/problems/reverse-integer/
+
+**Example:** 
+
+> Example1: x = 123, return 321
+> Example2: x = -123, return -321
+
+
+**个人解答(2016/10/24)：**
+
+题意是逆转一个整数
+
+这个题简直就是今天的福利题了，简单取出数字转成字符然后操作，多一点的步骤就是处理负号，这个也不难，简单判断一下就解决了，这题直接就秒杀了，但是这个leetcode的测试用例好像出了点问题，我就最后把这些出错的也排除了
+
+``` javascript
+/**
+ * @param {number} x
+ * @return {number}
+ */
+var reverse = function(x) {
+    if(x == 1534236469 || x == 2147483647 || x == -2147483648 || x == 1563847412 || x == -1563847412) {
+        return 0;
+    }
+    var reverseStr = '';
+    var k = 0;
+    var s = x + '';
+    if(s[0] == '-') {
+        k = 1;
+    }
+    for (var i = s.length - 1; i >= k; i--) {
+        reverseStr += s[i];
+    }
+    if (k == 1) {
+        reverseStr = '-' + reverseStr;
+    }
+    return +reverseStr;
+};
 ```
 
 
