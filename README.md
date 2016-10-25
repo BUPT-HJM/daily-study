@@ -260,6 +260,8 @@ var findMedianSortedArrays = function (nums1, nums2) {
 
 **个人解答(2016/10/22)：**
 
+题意是找到一个字符串的最大回文子串
+
 这个解答采用的是dp动态规划，答案没问题，但是又超时了，用java的同样算法居然能过，用js不行，今天无力再写了~之后再来改这题，网上的算法需要理解~
 
 ``` javascript
@@ -306,6 +308,56 @@ var longestPalindrome = function (s) {
 };
 
 ```
+
+**个人解答(2016/10/25)：**
+
+Manacher算法看了好久，看了中文的英文的，这个[https://www.felix021.com/blog/read.php?2040#blogcomment2615](https://www.felix021.com/blog/read.php?2040#blogcomment2615)写得很清楚,因为题意说字符串最大长度1000，则可以在每个字符上向两边扩展直到不对称为止，但是类似"abba"这种的对称中心就不在索引上，这种解法通过巧妙地在每个字符之间插入"#"，变为"#a#b#b#a"实现了可扩展，然后通过找到扩展数目与最大回文子串长度的关系，然后通过前面已经扩展过的对后面的影响，又降低了复杂度，真是一个巧妙的算法，不过需要花时间理解，最终也A过了，也蛮开心的~
+
+``` javascript
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var longestPalindrome = function (s) {
+    // 处理字符串
+    var change_s = '@';
+    for (var i = 0, len = s.length; i < len; i++) {
+        change_s += "#" + s[i];
+    }
+    change_s += "#%";
+    
+    //得到回文数组p 
+    var p = [];
+    var r_center = 0;
+    var r_edge = 0;
+    var max = 0;
+    var max_left = 0;
+    var max_right = 0;
+    for (var i = 1; change_s[i] != "%"; i++) {
+        p[i] = r_edge > i ? Math.min(p[r_center - (i - r_center)], r_edge - i) : 1; //根据对称来取值
+        while (change_s[i + p[i]] == change_s[i - p[i]]) // 回文
+            p[i]++;
+            
+        if (i + p[i] > r_edge) { // 扩展
+            r_edge = i + p[i];
+            r_center = i;
+        }
+        
+        if(p[i] > max ) {
+            if(p[i] == 1 && change_s[i] == "#") {
+                
+            } else {
+                 max = p[i];
+                 max_left = i - max + 1;
+                 max_right = i + max - 1;
+            }
+        }
+    }
+    var longest = change_s.substring(max_left, max_right + 1);
+    return longest.replace(/#/g,"");
+};
+```
+
 
 ## 6. ZigZag Conversion
 
