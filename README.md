@@ -493,6 +493,8 @@ var convert = function(s, numRows) {
 
 这个题简直就是今天的福利题了，简单取出数字转成字符然后操作，多一点的步骤就是处理负号，这个也不难，简单判断一下就解决了，这题直接就秒杀了，但是这个leetcode的测试用例好像出了点问题，我就最后把这些出错的也排除了
 
+ > update(2016/10/25): 发现并不是出错，只是leetcode对不同语言测试用例用的是一样的，对于C++/C,是`out of range (of 32-bit signed ints)`,所以才会这样。
+
 ``` javascript
 /**
  * @param {number} x
@@ -515,6 +517,63 @@ var reverse = function(x) {
         reverseStr = '-' + reverseStr;
     }
     return +reverseStr;
+};
+```
+
+
+
+## 8. String to Integer (atoi)
+
+> Implement atoi to convert a string to an integer.
+
+**Difficulty:** Easy
+
+**link:** https://leetcode.com/problems/string-to-integer-atoi/
+
+**Example:** 无
+
+**个人解答(2016/10/25)：**
+
+题意是将一个字符串转成数字
+
+对于js，觉得简直又是秒杀题，直接一个加号`+string`就可以把一个字符串转成数字了，然后发现`error`了，看到它需要考虑到空格等多种情况，做些正则与字符串处理这题就迎刃而解
+
+``` javascript
+/**
+ * @param {string} str
+ * @return {number}
+ */
+var myAtoi = function(str) {
+    str = str.trim();
+    var change_str = ""
+      , store_symbol = ""
+      , k = 0;
+    if (str[0] == "+" || str[0] == "-") {
+        store_symbol = str[0];
+        k = 1;
+    }
+    for (var i = k, len = str.length; i < len; i++) {
+        if (str[i] == " ") {
+            break;
+        }
+        if (!isNaN(+str[i])) {
+            change_str += str[i];
+        } else {
+            break;
+        }
+    }
+    change_str = store_symbol + change_str;
+    if (k == 1 && (change_str.length == 1) || isNaN(change_str[1] == 1)) {
+        return 0;
+    }
+    // c++越界
+    if (+change_str >= 2147483648) {
+        return 2147483647;
+    }
+    if (+change_str <= -2147483649) {
+        return -2147483648;
+    }
+    return +change_str;
 };
 ```
 
