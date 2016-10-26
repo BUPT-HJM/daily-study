@@ -577,7 +577,7 @@ var myAtoi = function(str) {
 };
 ```
 
-## 8. String to Integer (atoi)
+## 9. Palindrome Number
 
 > Determine whether an integer is a palindrome. Do this without extra space.
 
@@ -587,7 +587,7 @@ var myAtoi = function(str) {
 
 **Example:** 无
 
-**个人解答(2016/10/25)：**
+**个人解答(2016/10/26)：**
 
 题意是判断一个数字是否回文，不要用额外的空间
 
@@ -625,7 +625,33 @@ var isPalindrome = function(x) {
 };
 ```
 
+**个人解答(2016/10/26)：**
 
+觉得这题应该考察的是数字的乘除和余数的算法，我直接使用一个用数字余数的方式使纯数字逆序输出，最后再判断逆序的与正序的是否相等就解决了这个问题。
+
+``` javascript
+/**
+ * @param {number} x
+ * @return {boolean}
+ */
+var isPalindrome = function(x) {
+    if (x >= 2147483648 || x < 0) {
+        return false;
+    }
+    function reverse_num(x) {
+        var reverse_x = 0;
+        while (x >= 1) {
+            reverse_x = (reverse_x * 10) + (x % 10);//1234 => 4 => 43 => 432 => 4321
+            x = Math.floor(x / 10);
+        }
+        return reverse_x;
+    }
+    if (x !== reverse_num(x)) {
+        return false;
+    }
+    return true;
+}; 
+```
 ---
 
 ## 2016-10-19
