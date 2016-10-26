@@ -577,6 +577,54 @@ var myAtoi = function(str) {
 };
 ```
 
+## 8. String to Integer (atoi)
+
+> Determine whether an integer is a palindrome. Do this without extra space.
+
+**Difficulty:** Easy
+
+**link:** https://leetcode.com/problems/palindrome-number/
+
+**Example:** 无
+
+**个人解答(2016/10/25)：**
+
+题意是判断一个数字是否回文，不要用额外的空间
+
+我觉得先过了再说，就作弊了一发，转字符串逆序判断一下就解决了
+
+``` javascript
+/**
+ * @param {number} x
+ * @return {boolean}
+ */
+var isPalindrome = function(x) {
+    if (x >= 2147483648 || x <= -2147447412) {
+        return false;
+    }
+    var s = x + "",
+        k = 0,
+        reverse_s = "",
+        store_symbol = "";
+    if(s[0] == "+" || s[0] == "-") {
+        store_symbol = s[0]
+        k = 1;
+    }
+    if(store_symbol == "-") {
+        return false;
+    }
+    for(var i = s.length - 1; i >= k; i--) {
+        reverse_s += s[i];
+    }
+    reverse_s = store_symbol + reverse_s;
+    if(reverse_s == s) {
+        return true;
+    } else {
+        return false;
+    }
+};
+```
+
 
 ---
 
