@@ -652,6 +652,94 @@ var isPalindrome = function(x) {
     return true;
 }; 
 ```
+
+## 10. Regular Expression Matching
+
+> Implement regular expression matching with support for '.' and '*'.
+
+**Difficulty:** Hard
+
+**link:** https://leetcode.com/problems/regular-expression-matching/
+
+**Example:** 
+
+```
+
+'.' Matches any single character.
+'*' Matches zero or more of the preceding element.
+
+The matching should cover the entire input string (not partial).
+
+The function prototype should be:
+bool isMatch(const char *s, const char *p)
+
+Some examples:
+isMatch("aa","a") → false
+isMatch("aa","aa") → true
+isMatch("aaa","aa") → false
+isMatch("aa", "a*") → true
+isMatch("aa", ".*") → true
+isMatch("ab", ".*") → true
+isMatch("aab", "c*a*b") → true
+
+```
+
+
+**个人解答(2016/10/27)：**
+
+题意是执行匹配支持`.`和`*`
+
+本来我一看这个不就是js的正则吗，我去，突然想到在刷算法题，用正则练个啥哈哈哈。
+
+这里使用动态规划，在每一次计算结果会考虑到前面的计算结果，到最后一个计算后返回结果，这里采用动态规划表格，行列分别对应目标字符串和匹配字符，然后初始化后逐一判断，下面注释都写得挺清楚了~
+
+``` javascript
+/**
+ * @param {string} s
+ * @param {string} p
+ * @return {boolean}
+ */
+var isMatch = function(s, p) {
+    // 动态规划初始化
+    // 0 1 2
+    // 1|
+    // 2|
+    var dp = [];
+    var sl = s.length;
+    var pl = p.length;
+    for(var i = 0; i <= sl; i++) {
+        dp[i] = []
+        for (var j = 0; j <= pl; j++) {
+            dp[i][j] = false;
+        }
+    }
+    dp[0][0] = true;
+    
+    for(var j = 1; j < pl && p[j] == '*'; j += 2) { 
+        // 为了排除"abcd""d*"这种匹配成功的情况
+        // 后面只要前面匹配不成功，后面就不成功了
+        dp[0][j+1] = true;
+    }
+    
+    // 在动态规划表中
+    // i列对应的是s第i个=>s[i-1]
+    // j列对应的是p第j个=>p[j-1]
+    for(var i = 1; i <= sl; i++) {
+        for(var j = 1; j <= pl; j++) {
+            if (p[j-1] == "." || s[i-1] == p[j-1]) {
+                dp[i][j] = dp[i-1][j-1]; //取决于对角线上上一次匹配的
+            } else if(j > 1 && p[j-1] == "*") {
+                dp[i][j] = dp[i][j-2] || (dp[i-1][j] && (p[j-2] == "." || p[j-2] == s[i-1]))
+                // *号的前面的隔一个，如果已经匹配上则肯定匹配上了
+                // *号的前一个如果是.号，也可以匹配上
+                // *号的前一个如果是跟当前所匹配的，也可以匹配上
+                // 找到前一个匹配*是否匹配得上
+            }
+        }
+    }
+    return dp[sl][pl]; // 返回最终匹配结果
+};
+```
 ---
 
 ## 2016-10-19
