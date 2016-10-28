@@ -740,6 +740,78 @@ var isMatch = function(s, p) {
     return dp[sl][pl]; // 返回最终匹配结果
 };
 ```
+
+## 11. Container With Most Water
+
+> Given n non-negative integers a1, a2, ..., an, where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.
+
+> Note: You may not slant the container.
+
+**Difficulty:** Medium 
+
+**link:** https://leetcode.com/problems/container-with-most-water/
+
+**Example:** 无
+
+
+**个人解答(2016/10/28)：**
+
+题意是给定n个非负整数a1到an,每个代表一个坐标(i,ai)
+
+n条垂直的直线比如(i,0)与(i,ai)为端点的线
+
+找到两条线使它们和x轴围成的容器能装最多的水(你不需要倾倒容器)
+
+这个题目一看又是找最大值了,先用最单纯的想法写一波,就是从左往右遍历,用两层for循环遍历所有情况(恩,果然超时了)
+
+``` javascript
+/**
+ * @param {number[]} height
+ * @return {number}
+ */
+var maxArea = function(height) {
+    var max = 0;
+    var len = height.length;
+    for (var i = 0; i < len; i++) {
+        for (var j = i; j < len; j++) {
+            max = Math.max(max, Math.min(height[i], height[j]) * (j - i));
+        }
+    }
+    return max;  
+};
+
+```
+
+
+接下来就得换思路了,一个指针动不行我就来两个,从数组两端分别往中间动,但是如何判断动哪边
+
+如果右边的比较高,还让右边的往里面动,因为木桶效应,这样会让体积减小,则得让左边的往里动,反之就让右边往里动,直到两个指针动到同一个位置结束,最后返回最大值就行了
+
+``` javascript
+
+/**
+ * @param {number[]} height
+ * @return {number}
+ */
+var maxArea = function(height) {
+    var max = 0
+      , len = height.length
+      , left = 0
+      , right = len - 1;
+    while (right > left) {
+        max = Math.max(max, Math.min(height[left], height[right]) * (right - left));
+        if (height[right] >= height[left]) {
+            //如果右边的比较高,还让右边的往里面动,这样会让体积减小,则得让左边的往里动
+            left++;
+        } else {
+            right--;
+        }
+    }
+    return max;
+};
+
+```
+
 ---
 
 ## 2016-10-19
