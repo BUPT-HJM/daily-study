@@ -65,7 +65,9 @@ var twoSum = function (nums, target) {
 
 通过数学知识，判断一个数是不是某个数的幂，我们可以通过对数函数来判断，直接用换底公式来判断是否得出的为整数即可
 
-但是JavaScript 只有一种数字类型 Number ，而且在Javascript中所有的数字都是以IEEE-754标准格式表示的。浮点数存在精度问题
+但是JavaScript 只有一种数字类型 Number ，而且在Javascript中所有的数字都是以IEEE-754标准格式表示的, 计算出来不对是由于十进制和二进制的转换问题,二进制也有些数无法精确表示,再转换为十进制后就变得不准确了
+
+
 ```
 Chrome测试结果
 来源： http://madscript.com/javascript/javscript-float-number-compute-problem/
