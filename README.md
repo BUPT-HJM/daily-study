@@ -814,7 +814,78 @@ var maxArea = function(height) {
 
 ```
 
+
+## 38. Count and Say
+
+> The count-and-say sequence is the sequence of integers beginning as follows:
+1, 11, 21, 1211, 111221, ...
+
+> 1 is read off as "one 1" or 11.
+> 11 is read off as "two 1s" or 21.
+> 21 is read off as "one 2, then one 1" or 1211.
+> **Given an integer n, generate the nth sequence.**
+
+> Note: The sequence of integers will be represented as a string.
+
+**Difficulty:** Easy 
+
+**link:** https://leetcode.com/problems/count-and-say/
+
+**Example:** 无
+
+
+**个人解答(2016/11/2)：**
+
+表示题意刚开始没看懂,它意思是说有一个序列`1, 11, 21, 1211, 111221, ...`像这样,这个序列怎么构成的呢,后一个是前一个的读法,1的下一个是11,因为它念成`一个1`,然后它需要的是给一个整数n,然后产生这个序列的第n个结果
+
+刚开始我理解错,以为就是输入1,返回它的读法,后面理解了题意后,觉得可以先实现一个函数,输入字符后可以返回它的读法,然后最后要第n个序列,直接用一个循环就可以解决问题
+
+``` javascript
+/**
+ * @param {number} n
+ * @return {string}
+ */
+var countAndSay = function(n) {
+    if(n < 0) {
+        return "";
+    }
+    var str = '1';
+    for(var i = 0; i < n - 1; i++) {
+        str = say(str)
+    }
+    function say(str) {
+        var len = str.length,
+            sayStr = '';
+        if(len == 1) {
+            return 1 + '' + str[0];
+        }
+        for(var i = 1, pre = str[0], now = str[1], count = 1; i < len; i++) {
+            now = str[i];
+            if(now == pre) {//如果当前的等于前一个
+                count++;
+            } else {
+                 sayStr += count + '' + pre;//不等于前一个,前一个输出
+                 count = 1; // 重新初始化
+                 pre = now;
+            }
+            if(i == len - 1) {// 如果是最后一个则直接输出
+                sayStr += count + '' + pre;
+            }
+    
+        }
+        return sayStr;
+    }
+    return str;
+};
+
+```
+
+
+
 ---
+## 2016-11-02
+
+最近各种事铺面而来,能刷几题算几题吧
 ## 2016-10-30
 
 坚持了10天omg,受不了了,换成一周5题吧~233
