@@ -880,6 +880,100 @@ var countAndSay = function(n) {
 
 ```
 
+## 14. Longest Common Prefix
+
+> Write a function to find the longest common prefix string amongst an array of strings.
+
+**Difficulty:** Easy 
+
+**link:** https://leetcode.com/problems/longest-common-prefix/
+
+**Example:** 无
+
+
+**个人解答(2016/11/6)：**
+
+题意是写一个函数找到一个字符串数组的最长的相同前缀。
+
+这题看一下又是数组遍历题，但是我们需要一个基准来找到最长的，所以我选择先找到数组中最短的字符串，然后再进行遍历判断，这题就秒杀了，不过复杂度方面就有点烂了，这是最直接的解法
+
+``` javascript
+/**
+ * @param {string[]} strs
+ * @return {string}
+ */
+var longestCommonPrefix = function(strs) {
+    if(strs.length == 0) {
+        return "";
+    }
+    var shortest = strs[0].length,
+        shortestStr = strs[0],
+        len = strs.length;
+    for(var i = 1; i < len; i++) {
+        if(strs[i].length < shortest) {
+            shortest = strs[i].length;
+            shortestStr = strs[i];
+        }
+    }
+    
+    var l = shortestStr.length,
+        count = 0,
+        str = '';
+    while(count < l) {
+        for(var i = 0; i < len; i++) {
+            if(strs[i][count] !== shortestStr[count]) {
+                return str;
+            }
+        }
+        str += shortestStr[count];
+        count++;
+    }
+    return str;
+};
+
+```
+
+看了https://leetcode.com/articles/longest-common-prefix/后，换了一个二分查找的解法，其实跟我上面写的差不多，我是只用从左向右遍历，它直接从两边来遍历缩进，算法复杂度有所提升（发现很多题都是这个套路，分治法）
+
+``` javascript
+/**
+ * @param {string[]} strs
+ * @return {string}
+ */
+var longestCommonPrefix = function(strs) {
+    if(strs.length == 0) {
+        return "";
+    }
+    //找到最短的字符串长度
+    var shortest = strs[0].length,
+        len = strs.length;
+    for(var i = 1; i < len; i++) {
+        if(strs[i].length < shortest) {
+            shortest = strs[i].length;
+        }
+    }
+    var low = 1,
+        high = shortest;
+    while(low <= high) { //通过两个指针来缩短这个字符串直到它为最大相同前缀字符串
+        var middle = Math.floor((low + high) / 2);
+        if (isCommonPrefix(strs, middle))
+            low = middle + 1; 
+        else
+            high = middle - 1;
+    }
+    return strs[0].substring(0, (low + high) / 2);
+    
+    //判断这个字符串是否为共有前缀
+    function isCommonPrefix(strs, len){
+        var str1 = strs[0].substring(0, len);
+        for (var i = 1; i < strs.length; i++)
+            if (strs[i].indexOf(str1) !== 0)
+                return false;
+        return true;
+    }
+    return str;
+};
+```
 
 
 ---
