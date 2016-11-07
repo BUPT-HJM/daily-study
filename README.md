@@ -1028,7 +1028,7 @@ var threeSum = function(nums) {
 ```
 
 稍加修改，先排序后再遍历，然后在遍历的时候加一些判断来忽略某些不必要的遍历，稍微优化了下算法，倒是通过的，但是效率还是很低，之后再来研究高效算法。
-```
+``` javascript
 /**
  * @param {number[]} nums
  * @return {number[][]}
