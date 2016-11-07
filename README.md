@@ -976,6 +976,95 @@ var longestCommonPrefix = function(strs) {
 ```
 
 
+## 15. 3Sum
+
+> Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero
+
+**Difficulty:**  Medium  
+
+**link:** https://leetcode.com/problems/3sum/
+
+**Example:** 
+```
+For example, given array S = [-1, 0, 1, 2, -1, -4],
+
+A solution set is:
+[
+  [-1, 0, 1],
+  [-1, -1, 2]
+]
+```
+
+
+**个人解答(2016/11/7)：**
+
+题意是给名叫S的含有n个整数的数组，找出这个数组中三个之和可以为0的所有组合，不可以重复。
+
+这题看一下又一次无知地先采用暴力算法试试，复杂度就是n^3,果然超时了
+
+``` javascript
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var threeSum = function(nums) {
+    var len = nums.length;
+    var sum_array = [];
+    var hash = {};
+    for(var i = 0; i < len; i++) {
+        for(var j = i + 1; j < len; j++) {
+            var num_3 = 0 - (nums[i] + nums[j]);
+            for(var k = 0; k < len; k++) {
+                if(k!==i && k!==j && nums[k] == num_3 && !hash[[nums[i],nums[j],nums[k]].sort().toString()]) {
+                    sum_array.push([nums[i],nums[j],nums[k]]);
+                    hash[[nums[i],nums[j],nums[k]].sort().toString()] = true;
+                }
+            }
+        }
+    }
+    return sum_array;
+};
+
+```
+
+稍加修改，先排序后再遍历，然后在遍历的时候加一些判断来忽略某些不必要的遍历，稍微优化了下算法，倒是通过的，但是效率还是很低，之后再来研究高效算法。
+```
+/**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var threeSum = function(nums) {
+    var len = nums.length,
+        sum_array = [],
+        hash = {},
+        num_3;
+    if(len < 3) {
+        return [];
+    }
+    nums = nums.sort(function(a, b) {
+        return a - b;
+    });
+    for(var i = 0; i < len - 2; i++) {
+        for(var j = i + 1; j < len - 1; j++) {
+            num_3 = 0 - (nums[i] + nums[j]);
+            if(num_3 > nums[len - 1] || (num_3 <= 0 && nums[j+1] > 0)) {
+                continue;
+            }
+            for(var k = j + 1; k < len; k++) {
+                if(nums[k] == num_3 && !hash[[nums[i],nums[j],nums[k]].toString()]) {
+                    var arr = [nums[i],nums[j],nums[k]];
+                    sum_array.push(arr);
+                    hash[arr.toString()] = true;
+                    break;
+                }
+            }
+        }
+    }
+    return sum_array;
+};
+```
+
+
 ---
 ## 2016-11-02
 
