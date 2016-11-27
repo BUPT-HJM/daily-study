@@ -1065,6 +1065,114 @@ var threeSum = function(nums) {
 ```
 
 
+## 16. 3Sum Closest
+
+> Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
+
+**Difficulty:**  Medium  
+
+**link:** https://leetcode.com/problems/3sum-closest/
+
+**Example:** 
+```
+    For example, given array S = {-1 2 1 -4}, and target = 1.
+
+    The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+```
+
+
+**个人解答(2016/11/27)：**
+
+题意是给名叫S的含有n个整数的数组，找出这个数组中三个之和最接近目标值的三个数并且返回最接近的那个值
+
+本来打算用遍历想一想,肯定会超时便打算使用两边逼近去找最接近的那个值,在119/121数据的时候发现失败了omg
+
+``` javascript
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+var threeSumClosest = function(nums, target) {
+    if(nums.length < 3) {
+        return 0;
+    }
+    if(nums.length == 3) {
+        return nums[0] + nums[1] +nums[2];
+    }
+    var low = 0,
+        high = nums.length - 1,
+        closetTarget = 9999999, 
+        num_3, //除了low和high的第三个数
+        tempDistance,
+        closetDistance = 999999;
+    nums.sort(function(a,b) {
+        return a - b;
+    });
+    while((low+1)!==high) {
+        num_3 = target - nums[low] - nums[high];
+        if(num_3 >= nums[low] && num_3 <= nums[high]) { //第三个数位于最小值最大值之间
+            if((nums[high] - num_3) >= (num_3 -nums[low])) { //如果第三个数离右边比较近
+                tempDistance = Math.abs(target - (nums[low] + nums[high] + nums[high - 1]));
+                if(tempDistance < closetDistance) {
+                    closetTarget = nums[low] + nums[high] + nums[high - 1];
+                    closetDistance = tempDistance;
+                }
+                for(var i = high - 2; i >= low + 1; i--) {
+                    if(Math.abs(target - (nums[low] + nums[high] + nums[i])) <= tempDistance) { //小于上一次的距离,则可以继续遍历
+                        tempDistance = Math.abs(target - (nums[low] + nums[high] + nums[i]));
+                        if(tempDistance < closetDistance) {
+                            closetTarget = nums[low] + nums[high] + nums[i];
+                            closetDistance = tempDistance;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+                high--;
+                continue;
+            } else { //如果第三个数离左边比较近
+                tempDistance = Math.abs(target - (nums[low] + nums[high] + nums[low + 1]));
+                if(tempDistance < closetDistance) {
+                    closetTarget = nums[low] + nums[high] + nums[low + 1];
+                    closetDistance = tempDistance;
+                }
+                for(var i = low + 2; i <= high - 1; i++) {
+                    if(Math.abs(target - (nums[low] + nums[high] + nums[i])) <= tempDistance) { //小于上一次的距离,则可以继续遍历
+                        tempDistance = Math.abs(target - (nums[low] + nums[high] + nums[i]));
+                        if(tempDistance < closetDistance) {
+                            closetTarget = nums[low] + nums[high] + nums[i];
+                            closetDistance = tempDistance;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+                low++;
+                continue;
+            }
+        }
+        
+        if(num_3 < nums[low]) { //如果第三个数小于最左边那个数
+            if((low + 2) == high && Math.abs(target - (nums[low] + nums[low + 1] + nums[low + 2])) < closetDistance) {
+                return nums[low] + nums[low + 1] + nums[low + 2];
+            }
+            high--;
+        }
+        if(num_3 > nums[high]) { //如果第三个数大于最右边那个数
+            if((low + 2) == high && Math.abs(target - (nums[low] + nums[low + 1] + nums[low + 2])) < closetDistance) {
+                return nums[low] + nums[low + 1] + nums[low + 2];
+            }
+            low++;
+            
+        }
+    }
+    return closetTarget;
+};
+```
+
+
+
 ---
 ## 2016-11-23
 
