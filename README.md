@@ -1085,7 +1085,7 @@ var threeSum = function(nums) {
 
 题意是给名叫S的含有n个整数的数组，找出这个数组中三个之和最接近目标值的三个数并且返回最接近的那个值
 
-本来打算用遍历想一想,肯定会超时便打算使用两边逼近去找最接近的那个值,在119/121数据的时候发现失败了omg
+本来打算用遍历想一想,肯定会超时便打算使用两边逼近去找最接近的那个值,在119/121数据的时候发现失败了omg,用两边固定去找值然后移动两边是失败的
 
 ``` javascript
 /**
@@ -1171,6 +1171,46 @@ var threeSumClosest = function(nums, target) {
 };
 ```
 
+**个人解答(2016/11/29)：**
+
+既然固定两边不行,就可以固定一个点,然后用两边夹住去寻找最靠近的那个和,这样的算法是没有问题的,不过都需要先排序
+
+``` javascript
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+var threeSumClosest = function(nums, target) {
+    if(nums.length < 3) {
+        return 0;
+    }
+    if(nums.length == 3) {
+        return nums[0] + nums[1] + nums[2];
+    }
+    nums.sort(function(a,b) {
+        return a - b;
+    });
+    var len = nums.length,
+        closetTarget = nums[0] + nums[1] + nums[2];
+    for(var i = 0; i <= len; i++) {
+        var low = i + 1,
+            high = len - 1;
+        while(low < high) {
+            var nowTarget = nums[low] + nums[high] + nums[i];
+            if(Math.abs(nowTarget - target) < Math.abs(closetTarget - target)) {
+                closetTarget = nowTarget;
+            }
+            if(nowTarget < target) { 
+                low++; //如果当前和小于目标值
+            } else {
+                high--;
+            }
+        }
+    }
+    return closetTarget;
+};
+```
 
 
 ---
