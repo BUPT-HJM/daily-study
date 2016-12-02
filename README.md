@@ -1213,6 +1213,66 @@ var threeSumClosest = function(nums, target) {
 ```
 
 
+## 17. Letter Combinations of a Phone Number
+
+> Given a digit string, return all possible letter combinations that the number could represent.
+A mapping of digit to letters (just like on the telephone buttons) is given below.
+
+**Difficulty:**  Medium  
+
+**link:** https://leetcode.com/problems/letter-combinations-of-a-phone-number/
+
+**Example:** 
+```
+    Input:Digit string "23"
+    Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+```
+
+
+**个人解答(2016/12/02)：**
+
+题意是给一个数字字符串,返回所有数字可以代表的字母的组合(映射就是手机按键上的数字和字母的映射)
+
+这题看到mapping肯定是用hash来处理数字和字母的映射,如何在字符串长度不固定的时候生成数组,一般来说我们都是嵌套for循环来实现,这里我就抽离出一个函数,来处理单个数字的映射然后让它返回一个加上该字母映射的数组,然后总体for循环嵌套调用数组就解决问题了,这题很快就Accepted,happy day!
+
+``` javascript
+/**
+ * @param {string} digits
+ * @return {string[]}
+ */
+var letterCombinations = function(digits) {
+    if(digits.length === 0) {
+        return [];
+    }
+    var map = {
+        2: ["a","b","c"],
+        3: ["d","e","f"],
+        4: ["g","h","i"],
+        5: ["j","k","l"],
+        6: ["m","n","o"],
+        7: ["p","q","r","s"],
+        8: ["t","u","v"],
+        9: ["w","x","y","z"]
+    },
+    arr = map[digits[0]];
+    for(var k = 1, dl = digits.length; k < dl; k++) {
+        arr = digitMap(digits[k]);
+    }
+    function digitMap(digit) {
+        var tempArr = [];
+        for(var i = 0, al = arr.length; i < al; i++) {
+            for(var j = 0, ml = map[digit].length; j < ml; j++) {
+                tempArr.push(arr[i] + map[digit][j]);
+            }   
+        }
+        return tempArr;
+    }
+    return arr;
+};
+```
+
+
+
 ---
 ## 2016-11-23
 
