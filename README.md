@@ -1271,9 +1271,103 @@ var letterCombinations = function(digits) {
 };
 ```
 
+## 18. 4Sum
+
+> Given an array S of n integers, are there elements a, b, c, and d in S such that a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target.
+
+**Difficulty:**  Medium  
+
+**link:** https://leetcode.com/problems/4sum/
+
+**Example:** 
+```
+    For example, given array S = [1, 0, -1, 0, -2, 2], and target = 0.
+
+    A solution set is:
+    [
+      [-1,  0, 0, 1],
+      [-2, -1, 1, 2],
+      [-2,  0, 0, 2]
+    ]
+```
+
+
+**个人解答(2016/12/18)：**
+
+题意是就是给出n个数的数组以及目标值，求出所有不重复的和为目标值的四个数
+
+这题跟之前的各种sum类似，相比3sum就是多嵌套了一层for循环，内层采用同样的方式用left和right来逼近目标值即可，然后用hash来去重即可。
+
+``` javascript
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[][]}
+ */
+var fourSum = function(nums, target) {
+    var ans = [];
+    var hash = {};
+    nums.sort(function(a, b) {
+        return a-b;
+    });
+    for(var i = 0; i < nums.length - 3; i++) {
+        if(i !== 0 && nums[i] == nums[i-1]) {
+            continue;
+        }
+        
+        for(var j = i + 1; j < nums.length - 2; j++) {
+            if(j !== i + 1 && nums[j] == nums[j-1]) {
+                continue;
+            }
+            
+            var left = j + 1;
+            var right = nums.length - 1;
+            while(left < right) {
+                var sum = nums[i] + nums[j] + nums[left] + nums[right];
+                if(sum < target) {
+                    left++;
+                } else if (sum > target) {
+                    right--;
+                } else {
+                    var arr = [nums[i], nums[j], nums[left], nums[right]];
+                    if(!hash[arr.toString()]) {
+                        hash[arr.toString()] = true;
+                        ans.push(arr);
+                    }
+                    //可以两边同时移动了
+                    left++; 
+                    right--;
+                    //如果此时和前一个值相同，则继续++
+                    while(left < right && nums[left] == nums[left - 1]) {
+                        left++;
+                    }
+                    while(left < right && nums[right] == nums[right + 1]) {
+                        right--;
+                    }
+                }
+            }
+        }
+    }
+    return ans;
+};
+```
 
 
 ---
+## 2016-12-18
+觉得都该记录下每天学习的东西
+
+1.`path.resolve`方法用于将相对路径转为绝对路径
+
+运行脚本的位置是有可能会影响脚本中的相对路径的。
+```
+// 当前目录下
+path.dirname(__filename) + '/test.js';
+// 相邻目录下
+path.resolve(__dirname, '../lib/common.js');
+```
+
+
 ## 2016-11-23
 
 看到github上没亮了好多天,心里甚是难受,现在准备期中考omg没时间刷题和开项目了,就默默看看书吧~/(ㄒoㄒ)/~~
